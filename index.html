@@ -40,8 +40,145 @@
 
 <script>
 const devices = [
-    { name: "HP EliteBook مستعمل نقي", price: 3800, usage: "study", specs: "i5 جيل 10, رام 8 جيجا, GB 256 SSD نافع فالبرمجة والقراءة", link: "#" },
-    { name: "Asus ROG G18 وحش الألعاب", price: 22000, usage: "gaming", specs: "RTX خارقة, أسرع معالج للألعاب", link: "#" }
+   <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>TechWays - Desktop</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; text-align: center; padding: 20px; }
+        .container { max-width: 600px; background: white; margin: 20px auto; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; font-size: 24px; }
+        input, select, button { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        button { background: #27ae60; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 16px; }
+        button:hover { background: #219653; }
+        .result-box { margin-top: 15px; padding: 15px; border-radius: 6px; display: none; text-align: right; border: 2px solid #27ae60; background: #fafdfb; }
+        .buy-btn { background: #e67e22; display: block; text-align: center; color: white; padding: 8px; border-radius: 6px; text-decoration: none; margin-top: 10px; font-weight: bold; }
+        .buy-btn:hover { background: #d35400; }
+        label { display: block; text-align: right; font-weight: bold; margin-top: 5px; color: #34495e; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>مرحباً بك في TechWays 🚀</h1>
+    <p>تطبيقك الذكي لاختيار أفضل الأجهزة لسطح المكتب والهواتف.</p>
+    
+    <label for="deviceType">نوع الجهاز:</label>
+    <select id="deviceType">
+        <option value="phone">تليفون (Smartphone)</option>
+        <option value="pc">حاسوب (Ordinateur)</option>
+    </select>
+
+    <label for="usage">نوع الاستخدام:</label>
+    <select id="usage">
+        <option value="normal">استعمال يومي خفيف (Normal)</option>
+        <option value="study">الدراسة والبرمجة (Study / Coding)</option>
+        <option value="gaming">الألعاب والآداء العالي (Gaming)</option>
+    </select>
+    
+    <label for="budget">الميزانية القصوى:</label>
+    <input type="number" id="budget" placeholder="أدخل ميزانيتك بالدرهم المغربي (DH)">
+    
+    <button onclick="findBestDevice()">ابحث عن أفضل خيار ✨</button>
+    
+    <div id="result" class="result-box">
+        <h3 style="color: #d35400;">⭐ الخيار الذهبي المقترح:</h3>
+        <p id="dN" style="font-weight: bold; font-size: 18px; color: #2c3e50;"></p>
+        <p id="dS" style="color: #555; line-height: 1.5;"></p>
+        <p id="dP" style="color: #27ae60; font-weight: bold; font-size: 16px;"></p>
+        <a id="bl" href="#" target="_blank" class="buy-btn">فين كيطباع بأحسن ثمن؟ 🛒</a>
+    </div>
+</div>
+
+<script>
+const devices = [
+    // === الفئة الاقتصادية (أقل من 1500 درهم) ===
+    { type: "phone", name: "تليفون Redmi A3", price: 950, usage: "normal", specs: "بطارية 5000 mAh، شاشة كبيرة 90Hz، ممتاز للتصفح والواتساب للأجهزة للاستعمال اليومي الخفيف", link: "#" },
+    { type: "phone", name: "تليفون Infinix Smart 8", price: 1000, usage: "normal", specs: "تصميم عصري، بطارية قوية، كافية للاستعمال اليومي الخفيف", link: "#" },
+    { type: "phone", name: "تليفون Samsung Galaxy A05", price: 1150, usage: "normal", specs: "شاشة واضحة، معالج Helio G85، بطارية تدوم طويل", link: "#" },
+    { type: "phone", name: "تليفون Tecno Pop 8", price: 980, usage: "normal", specs: "سعر اقتصادي جداً، سماعات ستيريو، وممتاز للمكالمات والتطبيقات الخفيفة", link: "#" },
+    { type: "phone", name: "تليفون Realme Note 5", price: 1100, usage: "normal", specs: "مقاوم لقطرات الماء، شاشة سلسة، وتصميم نحيف وأنيق", link: "#" },
+    { type: "phone", name: "تليفون Oppo A18", price: 1350, usage: "normal", specs: "اعتمادية عالية من أوبو، معالج Helio G85، ومقاوم للغبار والماء الخفيف", link: "#" },
+    { type: "phone", name: "تليفون Itel P55", price: 1250, usage: "study", specs: "يدعم 5G (نسخة 5G)، رام كبيرة فئته، ممتاز للبحث والقراءة", link: "#" },
+    { type: "phone", name: "تليفون Infinix Hot 40i", price: 1300, usage: "study", specs: "مساحة 128GB، نافع بزاف لحفظ ملفات الدراسة والكتب الإلكترونية", link: "#" },
+    { type: "phone", name: "تليفون Redmi 13C", price: 1400, usage: "study", specs: "كاميرا 50MP، شاشة مريحة للعين، معالج جيد للمطالعة وتطبيقات الدراسة", link: "#" },
+
+    // === الفئة المتوسطة (1500 - 3000 درهم) ===
+    { type: "phone", name: "تليفون Samsung Galaxy A15", price: 1750, usage: "normal", specs: "شاشة Super AMOLED، بطارية توب طويلة من سامسونج", link: "#" },
+    { type: "phone", name: "تليفون Redmi Note 13 4G", price: 2100, usage: "normal", specs: "كاميرا 108MP، شاشة AMOLED 120Hz، حواف صغيرة", link: "#" },
+    { type: "phone", name: "تليفون Realme C67", price: 1950, usage: "normal", specs: "تصميم فخم، معالج Snapdragon 685، مستقر، صوت ستيريو قوي", link: "#" },
+    { type: "phone", name: "تليفون Samsung Galaxy A25", price: 2600, usage: "study", specs: "شاشة ممتازة جداً، يدعم 5G، فيه مثبت بصري OIS كاميرا", link: "#" },
+    { type: "phone", name: "تليفون Infinix Hot 40 Pro", price: 1850, usage: "gaming", specs: "معالج Helio G99، شاشة 120Hz، للألعاب الخفيفة والمتوسطة", link: "#" },
+    { type: "phone", name: "تليفون Tecno Pova 5 Pro", price: 2200, usage: "gaming", specs: "تصميم جيمينج بـ إضاءة LED خلفية، شحن سريع خارق 68W", link: "#" },
+    { type: "phone", name: "تليفون POCO M6 Pro", price: 2400, usage: "gaming", specs: "شاشة ممتازة، شحن سريع 67W، معالج Helio G99 Ultra وبابجي", link: "#" },
+    { type: "phone", name: "تليفون Redmi Note 13 Pro 4G", price: 2800, usage: "study", specs: "كاميرا خيالية 200MP، شحن سريع 67W، نافع للخدمة والقراءة", link: "#" },
+    { type: "phone", name: "تليفون Oppo A78 4G", price: 2300, usage: "normal", specs: "شاشة AMOLED، شحن سريع 67W، طارية قوية، واعتمادية أوبو المعروفة", link: "#" },
+
+    // === فئة الأداء العالي (3000 - 6000 درهم) ===
+    { type: "phone", name: "تليفون POCO X6 Pro", price: 3600, usage: "gaming", specs: "وحش ألعاب حقيقي في هاد الفئة! معالج Dimensity 8300 Ultra", link: "#" },
+    { type: "phone", name: "تليفون Samsung Galaxy A55", price: 4200, usage: "study", specs: "حماية قصوى للمعلومات، مقاوم للماء بالكامل، من الزجاج والألمنيوم", link: "#" },
+    { type: "phone", name: "تليفون Redmi Note 13 Pro Plus", price: 4400, usage: "gaming", specs: "مقاوم للماء IP68، شاشة منحنية فخمة، شحن خارق 120W", link: "#" },
+    { type: "phone", name: "تليفون Realme 12 Pro", price: 3900, usage: "normal", specs: "كاميرا تقريب تليسكوبية ممتازة، تصميم مستوحى من الساعات الفاخرة", link: "#" },
+    { type: "phone", name: "تليفون Nothing Phone (2a)", price: 3800, usage: "normal", specs: "واجهة نظام خفيفة ونقية بزاف بلا تطبيقات زايدة، تصميم من نوعه", link: "#" },
+    { type: "phone", name: "تليفون Google Pixel 7a", price: 4500, usage: "study", specs: "نظام أندرويد خام وذكي من جوجل، تصوير ممتاز وصور في هاد الثمن", link: "#" },
+    { type: "phone", name: "تليفون Samsung Galaxy S23 FE", price: 5600, usage: "gaming", specs: "يدعم الشحن اللاسلكي الذكي، معالج رائد للألعاب، كاميرا احترافية", link: "#" },
+
+    // === الفئة الرائدة والمليونيرية (أكثر من 6000 درهم) ===
+    { type: "phone", name: "تليفون iPhone 15", price: 950, usage: "normal", specs: "تصميم فخم، منفذ Type-C، أداء سلس جداً كيدوم لسنوات طويلة", link: "#" }, // Note: Ajusté le prix selon cohérence si besoin, gardé texte image
+    { type: "phone", name: "تليفون iPhone 15 Pro", price: 12500, usage: "gaming", specs: "هيكل من التيـتانيوم الخفيف والقوي، معالج A17 Pro يشغل ألعاب الـ PC", link: "#" },
+    { type: "phone", name: "تليفون iPhone 15 Pro Max", price: 16500, usage: "gaming", specs: "زر تحكم كاميرا جديد، بطارية هي الأقوى، شاشة عملاقة", link: "#" },
+    { type: "phone", name: "تليفون Samsung Galaxy S24 Ultra", price: 13000, usage: "study", specs: "قلم ذكي، شاشة مسطحة ضد الانعكاس، وحش الإنتاجية لشغل الذكاء الاصطناعي", link: "#" },
+    { type: "phone", name: "تليفون Xiaomi 14 Ultra", price: 12000, usage: "study", specs: "كاميرا احترافية خيالية بالتعاون مع Leica، وأقوى معالج", link: "#" },
+    { type: "phone", name: "تليفون OnePlus 12", price: 8500, usage: "gaming", specs: "شحن سريع لاسلكي وسلكي طيارة، ونظام تبريد ضخم للألعاب، شاشة مبهرة", link: "#" },
+
+    // === حواسب وأجهزة لوحية إضافية ===
+    { type: "pc", name: "حاسوب HP EliteBook مستعمل نقي", price: 3800, usage: "study", specs: "i5 جيل 10, رام 8 جيجا, GB 256 SSD نافع فالبرمجة والقراءة، سريع فالبرمجة والقراية والخدمة", link: "#" },
+    { type: "pc", name: "حاسوب Asus ROG G18 وحش الألعاب", price: 22000, usage: "gaming", specs: "شاشة 18 بوصة خيالية، معالج خارق، أسرع معالج للألعاب، مساحة RTX خيالية", link: "#" }
+];
+
+function findBestDevice() {
+    const budget = parseFloat(document.getElementById('budget').value);
+    const usage = document.getElementById('usage').value;
+    const deviceType = document.getElementById('deviceType').value;
+    const resultBox = document.getElementById('result');
+    
+    if (isNaN(budget) || budget <= 0) {
+        alert("الرجاء إدخال ميزانية صالحة 🤔");
+        return;
+    }
+
+    // 1. Filtrer d'abord par Type ET Usage ET Budget inférieur ou égal
+    let filtered = devices.filter(d => d.type === deviceType && d.usage === usage && d.price <= budget);
+    
+    // 2. Secours : Si aucun usage précis ne correspond dans le budget, on cherche juste par Type et Budget
+    if (filtered.length === 0) {
+        filtered = devices.filter(d => d.type === deviceType && d.price <= budget);
+    }
+    
+    if (filtered.length > 0) {
+        // Tri du moins cher au plus cher pour proposer la solution la plus économique d'abord
+        filtered.sort((a, b) => a.price - b.price);
+        
+        // Sélection du meilleur compromis (le premier après tri)
+        const best = filtered[0];
+        
+        document.getElementById('dN').innerText = best.name;
+        document.getElementById('dS').innerText = best.specs;
+        document.getElementById('dP').innerText = "الثمن: " + best.price + " DH";
+        document.getElementById('bl').href = best.link;
+        
+        resultBox.style.display = "block";
+    } else {
+        resultBox.style.display = "none";
+        alert("حاول تزيد الميزانية شوية! 💰 لم نجد جهازاً بهذا السعر.");
+    }
+}
+</script>
+
+</body>
+</html>
+ 
 ];
 
 function findBestDevice() {
