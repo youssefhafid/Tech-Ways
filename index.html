@@ -1,0 +1,85 @@
+<!DOCTYPEDOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>TechWays - Desktop</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; text-align: center; padding: 20px; }
+        .container { max-width: 500px; background: white; margin: 20px auto; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; font-size: 24px; }
+        input, select, button { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        button { background: #27ae60; color: white; border: none; font-weight: bold; cursor: pointer; }
+        button:hover { background: #219653; }
+        .result-box { margin-top: 15px; padding: 15px; border-radius: 6px; display: none; text-align: right; border: 2px solid #27ae60; }
+        .buy-btn { background: #e67e22; display: block; text-align: center; color: white; padding: 8px; border-radius: 6px; text-decoration: none; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>مرحباً بك في TechWays 🚀</h1>
+    <p>تطبيقك الذكي لاختيار أفضل الأجهزة لسطح المكتب.</p>
+    
+    <input type="number" id="budget" placeholder="أدخل ميزانيتك بالدرهم المغربي (DH)">
+    
+    <select id="usage">
+        <option value="gaming">الألعاب (Gaming)</option>
+        <option value="study">الدراسة والبرمجة (Coding)</option>
+    </select>
+    
+    <button onclick="findBestDevice()">ابحث عن أفضل خيار ✨</button>
+    
+    <div id="result" class="result-box">
+        <h3 style="color: #d35400;">⭐ الخيار الذهبي المقترح:</h3>
+        <p id="dN" style="font-weight: bold;"></p>
+        <p id="dS"></p>
+        <p id="dP" style="color: #27ae60; font-weight: bold;"></p>
+        <a id="bl" href="#" target="_blank" class="buy-btn">فين كيطباع بأحسن ثمن؟ 🛒</a>
+    </div>
+</div>
+
+<script>
+const devices = [
+    { name: "HP EliteBook مستعمل نقي", price: 3800, usage: "study", specs: "i5 جيل 10, رام 8 جيجا, GB 256 SSD نافع فالبرمجة والقراءة", link: "#" },
+    { name: "Asus ROG G18 وحش الألعاب", price: 22000, usage: "gaming", specs: "RTX خارقة, أسرع معالج للألعاب", link: "#" }
+];
+
+function findBestDevice() {
+    const budget = parseFloat(document.getElementById('budget').value);
+    const usage = document.getElementById('usage').value;
+    const resultBox = document.getElementById('result');
+    
+    if (isNaN(budget) || budget <= 0) {
+        alert("الرجاء إدخال ميزانية صالحة 🤔");
+        return;
+    }
+
+    // 1. Filtrer par budget ET par utilisation
+    let filtered = devices.filter(d => d.price <= budget && d.usage === usage);
+    
+    // 2. Si rien ne correspond, filtrer uniquement par budget (option de secours)
+    if (filtered.length === 0) {
+        filtered = devices.filter(d => d.price <= budget);
+    }
+    
+    if (filtered.length > 0) {
+        // CORRECTION : Tri du moins cher au plus cher (ordre croissant)
+        filtered.sort((a, b) => a.price - b.price);
+        
+        const best = filtered[0];
+        
+        document.getElementById('dN').innerText = best.name;
+        document.getElementById('dS').innerText = "المواصفات: " + best.specs;
+        document.getElementById('dP').innerText = "الثمن: " + best.price + " DH";
+        document.getElementById('bl').href = best.link;
+        
+        resultBox.style.display = "block";
+    } else {
+        resultBox.style.display = "none";
+        alert("حاول تزيد الميزانية شوية! 💰");
+    }
+}
+</script>
+
+</body>
+</html>
